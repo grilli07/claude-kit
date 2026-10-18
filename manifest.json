@@ -1,0 +1,53 @@
+{
+    "marketplaces":  [
+                         {
+                             "name":  "claude-community",
+                             "source":  "anthropics/claude-plugins-community"
+                         },
+                         {
+                             "name":  "claude-plugins-official",
+                             "source":  "anthropics/claude-plugins-official"
+                         },
+                         {
+                             "name":  "nateherk",
+                             "source":  "nateherkai/scroll-craft"
+                         }
+                     ],
+    "plugins":  [
+                    "claude-security@claude-plugins-official",
+                    "code-simplifier@claude-plugins-official",
+                    "frontend-design@claude-plugins-official",
+                    "nateherk-design@nateherk",
+                    "superpowers@claude-plugins-official"
+                ],
+    "skillSources":  [
+                         {
+                             "source":  "addyosmani/agent-skills",
+                             "skills":  "*"
+                         },
+                         {
+                             "source":  "supabase/agent-skills",
+                             "skills":  "*"
+                         },
+                         {
+                             "source":  "vercel-labs/skills",
+                             "skills":  "find-skills"
+                         }
+                     ],
+    "skillsCli":  "skills@1.7.2",
+    "extras":  {
+                   "rea":  {
+                               "mcpName":  "rea",
+                               "mcpCommand":  [
+                                                  "cmd",
+                                                  "/d",
+                                                  "/c",
+                                                  "npx",
+                                                  "-y",
+                                                  "rea-agents@6.5.0",
+                                                  "mcp"
+                                              ],
+                               "skillName":  "reverse-engineer-anything"
+                           }
+               }
+}
