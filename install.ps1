@@ -130,16 +130,17 @@ if ($NoClaudeMd) {
 } else {
   Write-Step 'CLAUDE.md global'
   $utf8 = New-Object System.Text.UTF8Encoding($false)
-  $block = [IO.File]::ReadAllText((Join-Path $Root 'CLAUDE.md'), $utf8).Trim()
+  # Tudo normalizado para LF: o checkout do git pode trazer CRLF e isso nao e mudanca de verdade.
+  $block = [IO.File]::ReadAllText((Join-Path $Root 'CLAUDE.md'), $utf8).Replace("`r`n", "`n").Trim()
   $target = Join-Path $ClaudeHome 'CLAUDE.md'
   $pattern = '(?s)<!-- claude-kit:begin.*?<!-- claude-kit:end -->'
   if (Test-Path $target) {
-    $current = [IO.File]::ReadAllText($target, $utf8)
+    $current = [IO.File]::ReadAllText($target, $utf8).Replace("`r`n", "`n")
     if ($current -match $pattern) { $new = [regex]::Replace($current, $pattern, { param($m) $block }) }
-    else { $new = $current.TrimEnd() + "`r`n`r`n" + $block + "`r`n" }
+    else { $new = $current.TrimEnd() + "`n`n" + $block + "`n" }
   } else {
     $current = $null
-    $new = $block + "`r`n"
+    $new = $block + "`n"
   }
   if ($current -eq $new) { Write-Skip 'ja atualizado' }
   elseif ($DryRun) { Write-Host "    [dry-run] gravar bloco claude-kit em $target" }
